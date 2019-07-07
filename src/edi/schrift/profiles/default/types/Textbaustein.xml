@@ -1,38 +1,30 @@
 <?xml version="1.0"?>
 <object xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    name="Schrift"
+    name="Textbaustein"
     meta_type="Dexterity FTI"
     i18n:domain="edi.schrift">
 
   <!-- Basic properties -->
   <property
       i18n:translate=""
-      name="title">Schrift</property>
+      name="title">Textbaustein</property>
   <property
       i18n:translate=""
-      name="description">Ordnertyp zum Verfassen einer Online-Schrift</property>
+      name="description">Textbaustein als Bestandteil der Schrift</property>
 
   <property name="allow_discussion">False</property>
-  <property name="factory">Schrift</property>
+  <property name="factory">Textbaustein</property>
   <property name="icon_expr"></property>
   <property name="link_target"></property>
 
   <!-- Hierarchy control -->
-  <property name="global_allow">True</property>
-  <property name="filter_content_types">True</property>
-  <property name="allowed_content_types">
-    <element value="Textbaustein" />
-      <!--
-    <element value="Document" />
-    <element value="File" />
-  -->
-  </property>
+  <property name="global_allow">False</property>
   <!-- Schema, class and security -->
-  <property name="add_permission">edi.schrift.AddSchrift</property>
-  <property name="klass">edi.schrift.content.schrift.Schrift</property>
+  <property name="add_permission">edi.schrift.AddTextbaustein</property>
+  <property name="klass">edi.schrift.content.textbaustein.Textbaustein</property>
   <property name="model_file"></property>
   <property name="model_source"></property>
-  <property name="schema">edi.schrift.content.schrift.ISchrift</property>
+  <property name="schema">edi.schrift.content.textbaustein.ITextbaustein</property>
 
   <!-- Enabled behaviors -->
   <property name="behaviors" purge="false">
@@ -55,14 +47,10 @@
     <!--<element value="plone.tableofcontents"/>-->
     <!--<element value="plone.versionable" />-->
     <!--<element value="plone.translatable" />-->
-    <!--<element value="plone.nextprevioustoggle" />-->
-    <!--<element value="plone.nextpreviousenabled" />-->
-    <!--<element value="plone.navigationroot" />-->
-    <!--<element value="plone.selectablecontrainstypes" />-->
   </property>
 
   <!-- View information -->
-  <property name="add_view_expr">string:${folder_url}/++add++Schrift</property>
+  <property name="add_view_expr">string:${folder_url}/++add++Textbaustein</property>
   <property name="default_view">view</property>
   <property name="default_view_fallback">False</property>
   <property name="immediate_view">view</property>

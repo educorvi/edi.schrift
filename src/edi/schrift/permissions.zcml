@@ -7,6 +7,12 @@
   <!-- -*- extra stuff goes here -*- -->
 
     <permission
+        id="edi.schrift.AddTextbaustein"
+        title="edi.schrift: Add Textbaustein"
+    />
+
+
+    <permission
         id="edi.schrift.AddSchrift"
         title="edi.schrift: Add Schrift"
     />
