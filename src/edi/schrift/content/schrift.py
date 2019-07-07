@@ -1,60 +1,60 @@
 # -*- coding: utf-8 -*-
+import random
+from DateTime import DatTime
 # from plone.app.textfield import RichText
-# from plone.autoform import directives
 from plone.dexterity.content import Container
-# from plone.namedfile import field as namedfile
 from plone.supermodel import model
-# from plone.supermodel.directives import fieldset
-# from z3c.form.browser.radio import RadioFieldWidget
-# from zope import schema
+from zope import schema
 from zope.interface import implementer
+from plone import api as ploneapi
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
+from edi.schrift import _
 
+schrifttyp = SimpleVocabulary(
+    [SimpleTerm(value=u'dp-pruefstellen-info', title=_(u'DP-Prüfstellen-Info')),
+     SimpleTerm(value=u'dp-info', title=_(u'DP-Info'))]
+    )
 
-# from edi.schrift import _
+def genWebcode():
+    aktuell=unicode(DateTime()).split(' ')[0]
+    neujahr='%s/01/01' %str(DateTime()).split(' ')[0][:4]
+    konstante=unicode(aktuell[2:4])
+    zufallszahl=unicode(random.randint(100000, 999999))
+    code=konstante+zufallszahl
+    results = ploneapi.content.find(Webcode=code, created={"query":[neujahr,aktuell],"range":"minmax"})
+    while results:
+        zufallszahl=unicode(random.randint(100000, 999999))
+        code=konstante+zufallszahl
+        results = ploneapi.content.find(Webcode=code, created={"query":[neujahr,aktuell],"range":"minmax"})
+    return code
 
 
 class ISchrift(model.Schema):
     """ Marker interface and Dexterity Python Schema for Schrift
     """
-    # If you want, you can load a xml model created TTW here
-    # and customize it in Python:
+    
+    title = schema.TextLine(title=u"Titel der Schrift",
+                            description=u"Der Titel der Schrift wird auf das PDF gedruckt")
 
-    # model.load('schrift.xml')
+    description = schema.Text(title=u"Kurzbeschreibung",
+                            description=u"Die Kurzbeschreibung wird nur Online angezeigt.",
+                            required=False)
 
-    # directives.widget(level=RadioFieldWidget)
-    # level = schema.Choice(
-    #     title=_(u'Sponsoring Level'),
-    #     vocabulary=LevelVocabulary,
-    #     required=True
-    # )
+    typ = schema.Choice(title=u"Typ der Schrift",
+                        description=u"Bitte wählen Sie einen Schrifttyp aus.",
+                        vocabulary=schrifttyp) 
 
-    # text = RichText(
-    #     title=_(u'Text'),
-    #     required=False
-    # )
+    stand = schema.Date(title=u"Stand der Schrift",
+                        description=u"Ohne Angabe wird automtatisch das Änderungsdatum verwendet.",
+                        required=False)
 
-    # url = schema.URI(
-    #     title=_(u'Link'),
-    #     required=False
-    # )
+    infonr = schema.TextLine(title=u"Info-Nr",
+                        description=u"Die Angabe wird momentan nur für die DP-Prüfstellen-Info benötigt.",
+                        required=False)
 
-    # fieldset('Images', fields=['logo', 'advertisement'])
-    # logo = namedfile.NamedBlobImage(
-    #     title=_(u'Logo'),
-    #     required=False,
-    # )
-
-    # advertisement = namedfile.NamedBlobImage(
-    #     title=_(u'Advertisement (Gold-sponsors and above)'),
-    #     required=False,
-    # )
-
-    # directives.read_permission(notes='cmf.ManagePortal')
-    # directives.write_permission(notes='cmf.ManagePortal')
-    # notes = RichText(
-    #     title=_(u'Secret Notes (only for site-admins)'),
-    #     required=False
-    # )
+    webcode = schema.TextLine(title=u"Webcode",
+                        description="Der Webcode wird automatisch beim Anlegen der Schrift erzeugt.",
+                        defaultFactory=genWebcode)
 
 
 @implementer(ISchrift)
