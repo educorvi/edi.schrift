@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import random
-from DateTime import DatTime
+from DateTime import DateTime
 # from plone.app.textfield import RichText
 from plone.dexterity.content import Container
 from plone.supermodel import model
@@ -53,7 +53,7 @@ class ISchrift(model.Schema):
                         required=False)
 
     webcode = schema.TextLine(title=u"Webcode",
-                        description="Der Webcode wird automatisch beim Anlegen der Schrift erzeugt.",
+                        description=u"Der Webcode wird automatisch beim Anlegen der Schrift erzeugt.",
                         defaultFactory=genWebcode)
 
 
