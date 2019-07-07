@@ -7,12 +7,11 @@
   -*- extra stuff goes here -*-
 
   <browser:page
-     name="schrift-view"
-     for="Products.CMFCore.interfaces.IFolderish"
+     name="view"
+     for="edi.schrift.content.schrift.ISchrift"
      class=".schrift_view.SchriftView"
      template="schrift_view.pt"
      permission="zope2.View"
      />
-
 
 </configure>

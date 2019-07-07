@@ -5,14 +5,41 @@
       i18n:domain="edi.schrift"
       metal:use-macro="context/main_template/macros/master">
 <body>
-    <metal:block fill-slot="content-core">
-      <div class="heading">
-        <li i18n:translate="">
-          Sample View
-        </li>
-      <span tal:content="view/msg">this gets replaced</span>
-      </div>
-    </metal:block>
+  <metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main" tal:define="header view/getSchriftHeader; content view/getSchriftContent">
 
+      <div class="row">
+        <div class="col-xs-6 col-sm-6">
+          <h3 tal:content="header/typ"/>
+        </div>
+        <div class="col-xs-6 col-sm-6">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6 col-sm-8">
+          <p>Stand: <span tal:content="header/stand"/></p>
+        </div>
+        <div class="col-xs-6 col-sm-4">
+          <p tal:condition="context/infonr" tal:content="context/infonr"/>
+          <p>Webcode: <span tal:content="context/webcode"/>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-12">
+          <h1 tal:content="context/title"/>
+          <hr>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+           <span tal:replace="structure content"/>
+        </div>
+      </div>
+
+    </tal:main-macro>
+  </metal:main>
 <body>
 </html>
