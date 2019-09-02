@@ -15,7 +15,7 @@ class SchriftView(BrowserView):
         header['typ'] = schrifttyp.getTerm(self.context.typ).title
         header['stand'] = self.context.modified().strftime('%d.%m.%Y')
         if self.context.stand:
-            header['stand'] = self.context.stand.strftime('%s.%m.%Y')
+            header['stand'] = self.context.stand.strftime('%d.%m.%Y')
         return header
 
     def getSchriftContent(self):
@@ -29,7 +29,7 @@ class SchriftView(BrowserView):
             if obj.portal_type == "Image":
                 if obj.image:
                     imgurl = '%s/@@images/image' % obj.absolute_url()
-                    html += '<p><img width="%s" class="img-responive inline" src="%s" title="%s"></p>' % (u'100%', imgurl, obj.title)
+                    html += '<p><img class="img-responsive inline" src="%s" title="%s"></p>' % (imgurl, obj.title)
                 if obj.description:
                     html += '<p class="discreet">%s</p>' % obj.description
         return html
